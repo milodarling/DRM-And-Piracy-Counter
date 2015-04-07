@@ -25,9 +25,15 @@ int main(int argc, char **argv, char **envp) {
 	NSString *urlString = [NSString stringWithFormat:@"http://yourdomain.com/packagecheck.php?hashstr=%@&package=%@&version=%@", hashStr, @"org.thebigboss.snooscreens", @"1.1-1"];
 	NSError *sendError = nil;
 	NSData *response = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] returningResponse:nil error:&sendError];
+	if (sendError) {
+		return 1; //error out to prevent deletion
+	}
 	//get a dictionary of the response (which returns the calculated UDID and if they paid)
 	NSError *jsonError = nil;
 	NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:response options:0 error:&jsonError];
+	if (jsonError) {
+		return 1; //error out to prevent deletion
+	}
 
 	//check if their paid.
 	BOOL paid = [responseDict[@"paid"] boolValue];
@@ -35,4 +41,5 @@ int main(int argc, char **argv, char **envp) {
 	if (!paid) {
 		NSLog(@"Piracy is bad, mkay?");
 	}
+	return 0;
 }
