@@ -1,0 +1,10 @@
+Package: me.milodarling.pir8
+Name: PIR8
+Depends: 
+Version: 0.0.1
+Architecture: iphoneos-arm
+Description: An awesome tool of some sort!!
+Maintainer: Milo Darling
+Author: Milo Darling
+Section: System
+Tag: role::hacker
